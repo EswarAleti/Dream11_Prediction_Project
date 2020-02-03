@@ -1,0 +1,48 @@
+import numpy as np
+import pandas as pd
+df1=pd.read_csv('IPL_2017.csv')
+
+teams=[['Sunrisers Hyderabad'],['Royal Challengers Bangalore'],['Mumbai Indians'],['Rising Pune Supergiant'],['Gujarat Lions'],['Kolkata Knight Riders'],['Kings XI Punjab'],['Delhi Daredevils']]
+
+def generate_team_players():
+
+        for i in range(0,df1.shape[0]):
+                for j in range(0,8):
+                        if(df1['batting_team'][i] == teams[j][0]):
+                                   if(df1['batsman'][i] not in teams[j]):
+                                        teams[j].append(df1['batsman'][i])
+                for j in range(0,8):
+                        if(df1['bowling_team'][i] == teams[j][0]):
+                                   if(df1['bowler'][i] not in teams[j]):
+                                        teams[j].append(df1['bowler'][i])                                        
+
+def show_teams():
+
+        for i in range(0,8):
+                print '************',teams[i][0],'*************'
+                for j in range(1,len(teams[i])):
+                        print teams[i][j]
+                        
+def create_files():
+                        
+        for i in range(0,8):
+                single_team=teams[i][1:]
+                single_team=[[x] for x in  single_team] #converting 1D list into 2D
+                for j in range(0,len(single_team)):
+                       for k in range(0,16):
+                              single_team[j].append('\0')
+              	#print single_team
+                #print
+                labels = ['Player']
+                for l in range(1,17):
+                	labels.append('m'+str(l))
+                #print labels
+                df = pd.DataFrame.from_records(single_team, columns=labels)
+                print df
+                #df.to_csv(teams[i][0]+'.csv',index=False)
+
+def main():
+        generate_team_players()
+        create_files()
+
+if __name__ == "__main__": main()                              

@@ -1,0 +1,5 @@
+import pandas as pd
+df1=pd.read_csv('IPL_2017.csv')
+columns=['non_striker','is_super_over','bye_runs','legbye_runs','penalty_runs','extra_runs','total_runs']
+df1.drop(columns, inplace=True,axis=1)
+df1.to_csv('IPL_2017_Use.csv',index=False)
